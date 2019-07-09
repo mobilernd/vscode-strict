@@ -1,0 +1,25 @@
+{
+    "name": "strict",
+    "displayName": "strict",
+    "description": "provides support of the strict programming language",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.36.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "strict",
+            "aliases": ["Strict", "strict"],
+            "extensions": [".strict"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "strict",
+            "scopeName": "source.strict",
+            "path": "./syntaxes/strict.tmLanguage"
+        }]
+    }
+}
