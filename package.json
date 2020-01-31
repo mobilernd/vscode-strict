@@ -1,7 +1,7 @@
 {
     "name": "strict",
-    "displayName": "strict",
-    "description": "provides support of the strict programming language",
+    "displayName": "Strict",
+    "description": "Strict programming language support",
     "version": "0.0.1",
     "engines": {
         "vscode": "^1.36.0"
