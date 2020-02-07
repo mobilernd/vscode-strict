@@ -1,9 +1,9 @@
-  name = strict
+name = strict
 file_extensions[] = strict;
 
-__KEYWORD_CONTROL \= (continue|break|in|from|downto|return|to|for|if|else|yield)
-__KEYWORD_OTHER \= (import|implement|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists)
-__OPERATORS \= ([.+|\-()<>\[\]!=%*,]+)
+__KEYWORD_CONTROL \= ((continue|break|in|from|downto|return|to|for|if|else|yield)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))
+__KEYWORD_OTHER \= ((import|factory|implement|stream|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists|let)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))
+__OPERATORS \= ([\{\}.+|\-()<>\[\]!=%*,:/]+)
 __IDENTIFIER \= ([a-zA-Z]+[a-zA-Z0-9_]*)
 __TYPE_NAME \= ([a-zA-Z][a-zA-Z0-9_<>\[\]\?]*)
 __BUILTIN \= (True|False|None|this)
@@ -17,6 +17,11 @@ styles [] {
    .Comment : style {
       color = #111
       textmate_scope = comment.line
+   }
+
+   .NameOfLabel : style {
+       color = #111
+       textmate_scope = variable.other
    }
 
    .keyword_declaration : style {
@@ -62,12 +67,17 @@ styles [] {
 
    .NameOfMember : style {
       color = orange
-      textmate_scope = variable.field
+      textmate_scope = variable.other.member
    }
 
    .NameOfFunction : style {
       color = pink
       textmate_scope = entity.name.function
+   }
+   
+   .AmbigousMethodId : style {
+     color = white
+     textmate_scope = identifier
    }
 
    .NameOfParameter : style {
@@ -155,6 +165,55 @@ contexts [] {
          }
       }
    }
+   
+   ClassSpecific : context {
+     : pattern {
+       regex \= (implement)(\s+)$${__TYPE_NAME}
+       styles []= .keyword_declaration, .None, .NameOfMember;
+     }
+   }
+
+   FieldDeclaration : context {
+     : pattern {
+       regex \= $${__TYPE_NAME}(\s+)$${__IDENTIFIER}
+       styles []= .NameOfType, .None, .NameOfMember;
+     }
+   }
+
+   FactoryDeclaration : context {
+    : inline_push {
+         regex \= (factory)(\s+)(?:(?:$${__TYPE_NAME}(\s+))?)$${__IDENTIFIER}(\s*)(\()
+         styles [] = .keyword_declaration, .None, .NameOfType, .None, .NameOfFunction, .None, .Punctuation;
+         : pop {
+            regex \= (\))
+            styles [] = .Punctuation;
+         }
+         : pattern {
+            regex \= (\,)
+            styles [] = .Punctuation;
+         }
+         : pattern {
+            regex \= $${__TYPE_NAME}(\s+)$${__IDENTIFIER}
+            styles [] = .NameOfType, .None, .NameOfParameter;
+         }
+         : pattern {
+            regex \= $${__TYPE_NAME}
+            styles [] = .NameOfType;
+         }
+      }
+      : pattern {
+         regex \= (factory)(\s+)(?:$${__TYPE_NAME}?)(\s+)$${__IDENTIFIER}
+         styles [] = .keyword_declaration, .None, .NameOfType, .None, .NameOfFunction;
+      }
+      : pattern {
+         regex \= (factory)(\s+)$${__TYPE_NAME}
+         styles [] = .keyword_declaration, .None, .AmbigousMethodId;
+      }
+      : pattern {
+         regex \= (factory)(\s+)$${__IDENTIFIER}(\s+)(\()
+         styles [] = .keyword_declaration, .None, .NameOfFunction, .None, .Punctuation;
+      }
+   }
 
    MethodDeclaration : context {
       : inline_push {
@@ -174,7 +233,7 @@ contexts [] {
          }
          : pattern {
             regex \= $${__TYPE_NAME}
-            styles [] = .NameOfParameter;
+            styles [] = .NameOfType;
          }
       }
       : pattern {
@@ -182,14 +241,13 @@ contexts [] {
          styles [] = .keyword_declaration, .None, .NameOfType, .None, .NameOfFunction;
       }
       : pattern {
-         regex \= (method)(\s+)$${__IDENTIFIER}
-         styles [] = .keyword_declaration, .None, .NameOfFunction;
+         regex \= (method)(\s+)$${__TYPE_NAME}
+         styles [] = .keyword_declaration, .None, .AmbigousMethodId;
       }
       : pattern {
-         regex \= (method)(\s+)$${__TYPE_NAME}
-         styles [] = .keyword_declaration, .None, .NameOfType;
+         regex \= (method)(\s+)$${__IDENTIFIER}(\s+)(\()
+         styles [] = .keyword_declaration, .None, .NameOfFunction, .None, .Punctuation;
       }
-
    }
 
    Statements : context {
@@ -238,6 +296,11 @@ contexts [] {
       : include "Keyword";
       : include "MethodCall";
 
+      : pattern {
+        regex \= $${__IDENTIFIER}(\s+)(\:)
+        styles []= .NameOfLabel, .None, .Punctuation;
+      }
+      
       : pattern {
          regex \= (\.)$${__IDENTIFIER}
          styles []= .Accessor, .NameOfMember;
@@ -393,6 +456,7 @@ contexts [] {
 
    main : context {
       : include "TopLevelDeclarations";
+      : include "FieldDeclaration";
       : include "Code";
 
       : pattern {
@@ -401,4 +465,3 @@ contexts [] {
       }
    }
 }
-
