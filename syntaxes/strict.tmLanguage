@@ -365,25 +365,19 @@
         </dict>
        </array>
     </dict>
-    <key>FactoryDeclaration__1</key>
+    <key>FactoryDeclaration</key>
     <dict>
       <key>patterns</key>
       <array> 
         <dict>
-          <key>match</key>
-          <string>(\,)</string>
-          <key>name</key>
-          <string>punctuation.strict</string>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)</string>
-          <key>captures</key>
+          <key>begin</key>
+          <string>(factory)(\s*)([a-zA-Z]*[a-zA-Z0-9_]*)(\s*)(\()</string>
+          <key>beginCaptures</key>
           <dict>
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>entity.name.type.strict</string>
+              <string>keyword.declaration.strict</string>
             </dict>
             <key>2</key>
             <dict>
@@ -393,15 +387,100 @@
             <key>3</key>
             <dict>
               <key>name</key>
-              <string>variable.parameter.strict</string>
+              <string>entity.name.function.strict</string>
+            </dict>
+            <key>4</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>5</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.strict</string>
+            </dict>
+          </dict>
+          <key>patterns</key>
+          <array> 
+            <dict>
+              <key>include</key>
+              <string>#FactoryDeclaration__1</string>
+            </dict>
+           </array>
+          <key>end</key>
+          <string>(\))</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.strict</string>
             </dict>
           </dict>
         </dict>
         <dict>
           <key>match</key>
-          <string>([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
-          <key>name</key>
-          <string>entity.name.type.strict</string>
+          <string>(factory)(\s+)(?:([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)?)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.type.strict</string>
+            </dict>
+            <key>4</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>5</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.function.strict</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(factory)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.function.strict</string>
+            </dict>
+          </dict>
+        </dict>
+       </array>
+    </dict>
+    <key>FactoryDeclaration__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>include</key>
+          <string>#ParameterList</string>
         </dict>
        </array>
     </dict>
@@ -597,13 +676,13 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>((continue|break|in|from|downto|return|to|for|if|else|yield)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))</string>
+          <string>((continue|break|in|use|from|downto|return|to|for|if|else|yield)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))</string>
           <key>name</key>
           <string>keyword.control.strict</string>
         </dict>
         <dict>
           <key>match</key>
-          <string>((import|factory|implement|stream|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists|let)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))</string>
+          <string>((import|factory|implement|has|returns|stream|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists|let)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))</string>
           <key>name</key>
           <string>keyword.other.strict</string>
         </dict>
@@ -615,7 +694,7 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>(let)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\s+)(\=)</string>
+          <string>(let|use)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\s+)(\=)</string>
           <key>captures</key>
           <dict>
             <key>1</key>
@@ -644,6 +723,66 @@
               <string>punctuation.strict</string>
             </dict>
           </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(has)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\s+)([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>variable.strict</string>
+            </dict>
+            <key>4</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>5</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.type.strict</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(has)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>variable.strict</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(has)</string>
+          <key>name</key>
+          <string>keyword.declaration.strict</string>
         </dict>
        </array>
     </dict>
@@ -808,7 +947,7 @@
       <array> 
         <dict>
           <key>begin</key>
-          <string>(method)(\s+)(?:(?:([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)(\s+))?)([a-zA-Z]+[a-zA-Z0-9_]*)(\s*)(\()</string>
+          <string>(method)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\s*)(\()</string>
           <key>beginCaptures</key>
           <dict>
             <key>1</key>
@@ -824,7 +963,7 @@
             <key>3</key>
             <dict>
               <key>name</key>
-              <string>entity.name.type.strict</string>
+              <string>entity.name.function.strict</string>
             </dict>
             <key>4</key>
             <dict>
@@ -832,16 +971,6 @@
               <string>none.strict</string>
             </dict>
             <key>5</key>
-            <dict>
-              <key>name</key>
-              <string>entity.name.function.strict</string>
-            </dict>
-            <key>6</key>
-            <dict>
-              <key>name</key>
-              <string>none.strict</string>
-            </dict>
-            <key>7</key>
             <dict>
               <key>name</key>
               <string>punctuation.strict</string>
@@ -866,63 +995,9 @@
           </dict>
         </dict>
         <dict>
-          <key>match</key>
-          <string>(method)(\s+)(?:([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)?)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)</string>
-          <key>captures</key>
-          <dict>
-            <key>1</key>
-            <dict>
-              <key>name</key>
-              <string>keyword.declaration.strict</string>
-            </dict>
-            <key>2</key>
-            <dict>
-              <key>name</key>
-              <string>none.strict</string>
-            </dict>
-            <key>3</key>
-            <dict>
-              <key>name</key>
-              <string>entity.name.type.strict</string>
-            </dict>
-            <key>4</key>
-            <dict>
-              <key>name</key>
-              <string>none.strict</string>
-            </dict>
-            <key>5</key>
-            <dict>
-              <key>name</key>
-              <string>entity.name.function.strict</string>
-            </dict>
-          </dict>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>(method)(\s+)([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
-          <key>captures</key>
-          <dict>
-            <key>1</key>
-            <dict>
-              <key>name</key>
-              <string>keyword.declaration.strict</string>
-            </dict>
-            <key>2</key>
-            <dict>
-              <key>name</key>
-              <string>none.strict</string>
-            </dict>
-            <key>3</key>
-            <dict>
-              <key>name</key>
-              <string>identifier.strict</string>
-            </dict>
-          </dict>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>(method)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\s+)(\()</string>
-          <key>captures</key>
+          <key>begin</key>
+          <string>(method)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\s*)(\()</string>
+          <key>beginCaptures</key>
           <dict>
             <key>1</key>
             <dict>
@@ -950,28 +1025,33 @@
               <string>punctuation.strict</string>
             </dict>
           </dict>
+          <key>patterns</key>
+          <array> 
+            <dict>
+              <key>include</key>
+              <string>#MethodDeclaration__2</string>
+            </dict>
+           </array>
+          <key>end</key>
+          <string>(\))</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.strict</string>
+            </dict>
+          </dict>
         </dict>
-       </array>
-    </dict>
-    <key>MethodDeclaration__1</key>
-    <dict>
-      <key>patterns</key>
-      <array> 
         <dict>
           <key>match</key>
-          <string>(\,)</string>
-          <key>name</key>
-          <string>punctuation.strict</string>
-        </dict>
-        <dict>
-          <key>match</key>
-          <string>([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)</string>
+          <string>(returns)(\s*)([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
           <key>captures</key>
           <dict>
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>entity.name.type.strict</string>
+              <string>keyword.declaration.strict</string>
             </dict>
             <key>2</key>
             <dict>
@@ -981,15 +1061,51 @@
             <key>3</key>
             <dict>
               <key>name</key>
-              <string>variable.parameter.strict</string>
+              <string>entity.name.type.strict</string>
             </dict>
           </dict>
         </dict>
         <dict>
           <key>match</key>
-          <string>([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
-          <key>name</key>
-          <string>entity.name.type.strict</string>
+          <string>(method)(\s+)([a-zA-Z]+[a-zA-Z0-9_]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.function.strict</string>
+            </dict>
+          </dict>
+        </dict>
+       </array>
+    </dict>
+    <key>MethodDeclaration__1</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>include</key>
+          <string>#ParameterList</string>
+        </dict>
+       </array>
+    </dict>
+    <key>MethodDeclaration__2</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>include</key>
+          <string>#ParameterList</string>
         </dict>
        </array>
     </dict>
@@ -1014,6 +1130,52 @@
           <string>([\{\}.\x{002b}\x{007c}\-\x{0028}\x{0029}\x{003c}\x{003e}\[\]\x{0021}\x{003d}\x{0025}\x{002a}\x{002c}\x{003a}\x{002f}]+)</string>
           <key>name</key>
           <string>keyword.operator.strict</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(and|is|or|isnt|xor)</string>
+          <key>name</key>
+          <string>keyword.operator.strict</string>
+        </dict>
+       </array>
+    </dict>
+    <key>ParameterList</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(\,)</string>
+          <key>name</key>
+          <string>punctuation.strict</string>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>([a-zA-Z]+[a-zA-Z0-9_]*)(\s+)([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>variable.parameter.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.type.strict</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>([a-zA-Z]+[a-zA-Z0-9_]*)</string>
+          <key>name</key>
+          <string>variable.parameter.strict</string>
         </dict>
        </array>
     </dict>
@@ -1068,15 +1230,76 @@
       <array> 
         <dict>
           <key>match</key>
+          <string>(\$)([a-zA-Z]+[a-zA-Z0-9_]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>meta.interpolation.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>meta.interpolation.strict</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>begin</key>
+          <string>(\$)(\()</string>
+          <key>beginCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>meta.interpolation.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.section.interpolation.begin.strict</string>
+            </dict>
+          </dict>
+          <key>patterns</key>
+          <array> 
+            <dict>
+              <key>include</key>
+              <string>#TextLiteral__2</string>
+            </dict>
+           </array>
+          <key>end</key>
+          <string>(\))</string>
+          <key>endCaptures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>punctuation.section.interpolation.end.strict</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
           <string>(\\(?:\\|&quot;))</string>
           <key>name</key>
           <string>string.strict</string>
         </dict>
         <dict>
           <key>match</key>
-          <string>([^\x{0022}\x{005c}]+)</string>
+          <string>([^\x{0022}\x{005c}])</string>
           <key>name</key>
           <string>string.strict</string>
+        </dict>
+       </array>
+    </dict>
+    <key>TextLiteral__2</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>include</key>
+          <string>#Expressions</string>
         </dict>
        </array>
     </dict>
@@ -1149,6 +1372,10 @@
         <dict>
           <key>include</key>
           <string>#MethodDeclaration</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#FactoryDeclaration</string>
         </dict>
         <dict>
           <key>include</key>
