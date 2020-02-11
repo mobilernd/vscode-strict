@@ -2,7 +2,7 @@ name = strict
 file_extensions[] = strict;
 
 __KEYWORD_CONTROL \= ((continue|break|in|use|from|downto|return|to|for|if|else|yield)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))
-__KEYWORD_OTHER \= ((import|factory|implement|has|returns|stream|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists|let)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))
+__KEYWORD_OTHER \= ((import|factory|implement|with|has|returns|stream|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists|let)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))
 __KEYWORD_OPERATORS \= (and|is|or|isnt|xor)
 __OPERATORS \= ([\{\}.+|\-()<>\[\]!=%*,:/]+)
 __IDENTIFIER \= ([a-zA-Z]+[a-zA-Z0-9_]*)
@@ -94,7 +94,7 @@ styles [] {
 
    .FunctionCall : style {
       color = yellow
-      textmate_scope = meta.function-call
+      textmate_scope = entity.name.function
    }
 
    .NumberLiteral : style {
@@ -162,6 +162,7 @@ styles [] {
 contexts [] {
    TopLevelDeclarations : context {
       : include "Comment";
+      : include "ClassSpecific";
       : include "MethodDeclaration";
       : include "FactoryDeclaration";
       : include "Throws";
@@ -197,7 +198,15 @@ contexts [] {
    ClassSpecific : context {
      : pattern {
        regex \= (implement)(\s+)$${__TYPE_NAME}
-       styles []= .keyword_declaration, .None, .NameOfMember;
+       styles []= .keyword_declaration, .None, .NameOfType;
+     }
+     : pattern {
+       regex \= (generic)(\s+)$${__TYPE_NAME}(\s+)(is)(\s+)$${__TYPE_NAME}
+       styles []= .keyword_declaration, .None, .NameOfType, .None, .keyword_declaration, .None, .NameOfType;
+     }
+     : pattern {
+       regex \= (generic)(\s+)$${__TYPE_NAME}
+       styles []= .keyword_declaration, .None, .NameOfType;
      }
    }
 

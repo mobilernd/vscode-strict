@@ -74,6 +74,98 @@
         </dict>
        </array>
     </dict>
+    <key>ClassSpecific</key>
+    <dict>
+      <key>patterns</key>
+      <array> 
+        <dict>
+          <key>match</key>
+          <string>(implement)(\s+)([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.type.strict</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(generic)(\s+)([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)(\s+)(is)(\s+)([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.type.strict</string>
+            </dict>
+            <key>4</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>5</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>6</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>7</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.type.strict</string>
+            </dict>
+          </dict>
+        </dict>
+        <dict>
+          <key>match</key>
+          <string>(generic)(\s+)([a-zA-Z][a-zA-Z0-9_\x{003c}\x{003e}\[\]\?]*)</string>
+          <key>captures</key>
+          <dict>
+            <key>1</key>
+            <dict>
+              <key>name</key>
+              <string>keyword.declaration.strict</string>
+            </dict>
+            <key>2</key>
+            <dict>
+              <key>name</key>
+              <string>none.strict</string>
+            </dict>
+            <key>3</key>
+            <dict>
+              <key>name</key>
+              <string>entity.name.type.strict</string>
+            </dict>
+          </dict>
+        </dict>
+       </array>
+    </dict>
     <key>Code</key>
     <dict>
       <key>patterns</key>
@@ -682,7 +774,7 @@
         </dict>
         <dict>
           <key>match</key>
-          <string>((import|factory|implement|has|returns|stream|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists|let)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))</string>
+          <string>((import|factory|implement|with|has|returns|stream|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists|let)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))</string>
           <key>name</key>
           <string>keyword.other.strict</string>
         </dict>
@@ -817,7 +909,7 @@
             <key>2</key>
             <dict>
               <key>name</key>
-              <string>meta.function-call.strict</string>
+              <string>entity.name.function.strict</string>
             </dict>
             <key>3</key>
             <dict>
@@ -866,7 +958,7 @@
             <key>1</key>
             <dict>
               <key>name</key>
-              <string>meta.function-call.strict</string>
+              <string>entity.name.function.strict</string>
             </dict>
             <key>2</key>
             <dict>
@@ -1368,6 +1460,10 @@
         <dict>
           <key>include</key>
           <string>#Comment</string>
+        </dict>
+        <dict>
+          <key>include</key>
+          <string>#ClassSpecific</string>
         </dict>
         <dict>
           <key>include</key>
